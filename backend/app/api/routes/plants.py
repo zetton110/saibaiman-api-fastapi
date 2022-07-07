@@ -3,8 +3,9 @@ from typing import List
 from app.api.dependencies.database import get_repository
 from app.db.repositories.plants import PlantsRepository
 from app.models.plant import PlantCreate, PlantPublic, PlantUpdate
-from fastapi import APIRouter, Body, Depends, HTTPException, Path
+from fastapi import APIRouter, Body, Depends, HTTPException, Path, UploadFile, File
 from starlette.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND
+import shutil
 
 router = APIRouter()
 
@@ -68,3 +69,13 @@ async def delete_plant_by_id(
             status_code=HTTP_404_NOT_FOUND,
             detail='No plant found with that id.')
     return deleted_id
+
+@router.post('/upload')
+def uploadfile(upload_file: UploadFile = File(...)):
+    path = f'uploads/{upload_file.filename}'
+    with open(path, 'w+b') as buffer:
+        shutil.copyfileobj(upload_file.file, buffer)
+    return {
+        'filename': path,
+        'type': upload_file.content_type
+    }
