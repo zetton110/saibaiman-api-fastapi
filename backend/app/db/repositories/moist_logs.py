@@ -28,6 +28,12 @@ class MoistLogsRepository(BaseRepository):
         moist_log_records = await self.db.fetch_all(
             query=query.GET_ALL_MOIST_LOGS_QUERY)
         return [MoistLogInDB(**item) for item in moist_log_records]
+
+    async def get_all_moist_logs_by_plant_id(self, *, plant_id: int) -> List[MoistLogInDB]:
+        moist_log_records = await self.db.fetch_all(
+            query=query.GET_ALL_MOIST_LOGS_QUERY_BY_PLANT_ID,
+            values={'plant_id': plant_id})
+        return [MoistLogInDB(**item) for item in moist_log_records]
     
     async def delete_moist_log_by_id(self, *, id: int) -> int:
         moist_log = await self.get_moist_log_by_id(id=id)
