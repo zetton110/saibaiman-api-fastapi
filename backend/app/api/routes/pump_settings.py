@@ -9,7 +9,7 @@ import shutil
 
 router = APIRouter()
 
-@router.get('/',
+@router.get('/all',
             response_model=List[PumpSettingPublic],
             name='pump_settings:get-all-pump_settings')
 async def get_all_pump_settings(
