@@ -20,7 +20,7 @@ class SnapshotInDB(IDModelMixin, DateTimeModelMixin, SnapshotBase):
     plant_id: int
     image_file: str
 
-class SnapshotPublic(DateTimeModelMixin, SnapshotBase):
+class SnapshotPublic(IDModelMixin, DateTimeModelMixin, SnapshotBase):
     plant_id: int
     image_file: str
 

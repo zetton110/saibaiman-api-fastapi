@@ -16,5 +16,5 @@ class PumpLogUpdate(PumpLogBase):
 class PumpLogInDB(IDModelMixin, DateTimeModelMixin, PumpLogBase):
     plant_id: int
 
-class PumpLogPublic(DateTimeModelMixin, PumpLogBase):
+class PumpLogPublic(IDModelMixin, DateTimeModelMixin, PumpLogBase):
     plant_id: int

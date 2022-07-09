@@ -22,7 +22,7 @@ class PumpSettingInDB(IDModelMixin, DateTimeModelMixin, PumpSettingBase):
     need_pump: Optional[float]
     complete_pump: Optional[float]
 
-class PumpSettingPublic(DateTimeModelMixin, PumpSettingBase):
+class PumpSettingPublic(IDModelMixin, DateTimeModelMixin, PumpSettingBase):
     plant_id: int
     need_pump: Optional[float]
     complete_pump: Optional[float]
