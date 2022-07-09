@@ -17,7 +17,7 @@ class PumpLogsRepository(BaseRepository):
 
     async def get_pump_log_by_id(self, *, id: int) -> PumpLogInDB:
         pump_log = await self.db.fetch_one(
-            query=query.GET_PUMP_LOG_BY_QUERY,
+            query=query.GET_PUMP_LOG_BY_ID_QUERY,
             values={'id': id}
         )
         if not pump_log:

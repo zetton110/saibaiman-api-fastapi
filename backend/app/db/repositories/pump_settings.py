@@ -17,7 +17,7 @@ class PumpSettingsRepository(BaseRepository):
 
     async def get_pump_setting_by_id(self, *, id: int) -> PumpSettingInDB:
         pump_setting = await self.db.fetch_one(
-            query=query.GET_PUMP_SETTING_LOG_BY_QUERY,
+            query=query.GET_PUMP_SETTING_LOG_BY_ID_QUERY,
             values={'id': id}
         )
         if not pump_setting:

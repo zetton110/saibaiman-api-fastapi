@@ -17,7 +17,7 @@ class SnapshotsRepository(BaseRepository):
     
     async def get_snapshot_by_id(self, *, id: int) -> SnapshotInDB:
         snapshot = await self.db.fetch_one(
-            query=query.GET_SNAPSHOT_BY_QUERY,
+            query=query.GET_SNAPSHOT_BY_ID_QUERY,
             values={'id': id}
         )
         if not snapshot:

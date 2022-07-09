@@ -17,7 +17,7 @@ class MoistLogsRepository(BaseRepository):
 
     async def get_moist_log_by_id(self, *, id: int) -> MoistLogInDB:
         moist_log = await self.db.fetch_one(
-            query=query.GET_MOIST_LOG_BY_QUERY,
+            query=query.GET_MOIST_LOG_BY_ID_QUERY,
             values={'id': id}
         )
         if not moist_log:
