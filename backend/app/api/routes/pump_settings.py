@@ -42,6 +42,20 @@ async def get_pump_setting_by_id(
             detail='Not found')
     return pump_setting
 
+@router.get('/', response_model=PumpSettingPublic,
+            name='pump_settings:get-pump_setting-by-id')
+async def get_pump_setting_by_with_query_params(
+    plant_id: int, pump_settings_repo: PumpSettingsRepository = Depends(
+        get_repository(PumpSettingsRepository
+                       ))
+) -> PumpSettingPublic:
+    pump_setting = await pump_settings_repo.get_pump_setting_by_plant_id(plant_id=plant_id)
+    if not pump_setting:
+        raise HTTPException(
+            status_code=HTTP_404_NOT_FOUND,
+            detail='Not found')
+    return pump_setting
+
 @router.delete('/{id}/', response_model=int, name='pump_settings:delete-pump_setting-by-id')
 async def delete_pump_setting_by_id(
     id: int = Path(..., ge=1, title='The ID of the pump_setting to delete.'),
