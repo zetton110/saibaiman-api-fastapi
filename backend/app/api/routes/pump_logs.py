@@ -9,13 +9,22 @@ import shutil
 
 router = APIRouter()
 
-@router.get('/',
+@router.get('/all',
             response_model=List[PumpLogPublic],
             name='pump_logs:get-all-pump_logs')
 async def get_all_pump_logs(
     pump_logs_repo: PumpLogsRepository = Depends(get_repository(PumpLogsRepository))
 ) -> List[PumpLogPublic]:
     return await pump_logs_repo.get_all_pump_logs()
+
+@router.get('/',
+            response_model=List[PumpLogPublic],
+            name='pump_logs:get-all-pump_logs-by-plant-id')
+async def get_all_pump_logs_by_plant_id(
+    plant_id: int,
+    pump_logs_repo: PumpLogsRepository = Depends(get_repository(PumpLogsRepository))
+) -> List[PumpLogPublic]:
+    return await pump_logs_repo.get_all_pump_logs_by_plant_id(plant_id=plant_id)
 
 @router.post('/',
              response_model=PumpLogPublic,

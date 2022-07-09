@@ -29,6 +29,12 @@ class PumpLogsRepository(BaseRepository):
             query=query.GET_ALL_PUMP_LOGS_QUERY)
         return [PumpLogInDB(**item) for item in pump_log_records]
     
+    async def get_all_pump_logs_by_plant_id(self, *, plant_id: int) -> List[PumpLogInDB]:
+        pump_log_records = await self.db.fetch_all(
+            query=query.GET_ALL_PUMP_LOGS_BY_PLANT_ID_QUERY,
+            values={'plant_id': plant_id})
+        return [PumpLogInDB(**item) for item in pump_log_records]
+    
     async def delete_pump_log_by_id(self, *, id: int) -> int:
         pump_log = await self.get_pump_log_by_id(id=id)
         if not pump_log:

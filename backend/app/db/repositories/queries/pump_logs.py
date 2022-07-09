@@ -12,6 +12,11 @@ GET_ALL_PUMP_LOGS_QUERY = '''
     SELECT id, plant_id, created_at, updated_at
     FROM pump_logs;
 '''
+GET_ALL_PUMP_LOGS_BY_PLANT_ID_QUERY = '''
+    SELECT id, plant_id, created_at, updated_at
+    FROM pump_logs
+    WHERE plant_id = :plant_id;
+'''
 DELETE_PUMP_LOG_BY_ID_QUERY = '''
     DELETE FROM pump_logs
     WHERE id = :id
