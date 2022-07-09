@@ -37,20 +37,6 @@ async def create_new_moist_log(
     created_moist_log = await moist_logs_repo.create_moist_log(new_moist_log=new_moist_log)
     return created_moist_log
 
-@router.get('/{id}/', response_model=MoistLogPublic,
-            name='moist_logs:get-moist_log-by-id')
-async def get_moist_log_by_id(
-    id: int, moist_logs_repo: MoistLogsRepository = Depends(
-        get_repository(MoistLogsRepository
-                       ))
-) -> MoistLogPublic:
-    moist_log = await moist_logs_repo.get_moist_log_by_id(id=id)
-    if not moist_log:
-        raise HTTPException(
-            status_code=HTTP_404_NOT_FOUND,
-            detail='Not found')
-    return moist_log
-
 @router.delete('/{id}/', response_model=int, name='moist_logs:delete-moist_log-by-id')
 async def delete_moist_log_by_id(
     id: int = Path(..., ge=1, title='The ID of the moist_log to delete.'),

@@ -28,20 +28,6 @@ async def create_new_pump_setting(
     created_pump_setting = await pump_settings_repo.create_pump_setting(new_pump_setting=new_pump_setting)
     return created_pump_setting
 
-@router.get('/{id}/', response_model=PumpSettingPublic,
-            name='pump_settings:get-pump_setting-by-id')
-async def get_pump_setting_by_id(
-    id: int, pump_settings_repo: PumpSettingsRepository = Depends(
-        get_repository(PumpSettingsRepository
-                       ))
-) -> PumpSettingPublic:
-    pump_setting = await pump_settings_repo.get_pump_setting_by_id(id=id)
-    if not pump_setting:
-        raise HTTPException(
-            status_code=HTTP_404_NOT_FOUND,
-            detail='Not found')
-    return pump_setting
-
 @router.get('/', response_model=PumpSettingPublic,
             name='pump_settings:get-pump_setting-by-id')
 async def get_pump_setting_by_with_query_params(
