@@ -6,23 +6,23 @@ class PumpSettingBase(CoreModel):
     All common characteristics of our Cleaning resource
     """
     plant_id: Optional[int]
-    lower_limit_moist: Optional[float]
-    upper_limit_moist: Optional[float]
+    need_pump: Optional[float]
+    complete_pump: Optional[float]
 
 class PumpSettingCreate(PumpSettingBase):
     plant_id: int
-    lower_limit_moist: Optional[float]
-    upper_limit_moist: Optional[float]
+    need_pump: Optional[float]
+    complete_pump: Optional[float]
 
 class PumpSettingUpdate(PumpSettingBase):
     pass
 
 class PumpSettingInDB(IDModelMixin, DateTimeModelMixin, PumpSettingBase):
     plant_id: int
-    lower_limit_moist: Optional[float]
-    upper_limit_moist: Optional[float]
+    need_pump: Optional[float]
+    complete_pump: Optional[float]
 
 class PumpSettingPublic(IDModelMixin, DateTimeModelMixin, PumpSettingBase):
     plant_id: int
-    lower_limit_moist: Optional[float]
-    upper_limit_moist: Optional[float]
+    need_pump: Optional[float]
+    complete_pump: Optional[float]

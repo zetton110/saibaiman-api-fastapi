@@ -57,8 +57,8 @@ def create_pump_settings_table() -> None:
         "pump_settings",
         sa.Column("id", sa.Integer, primary_key=True),
         sa.Column("plant_id", sa.Integer, sa.ForeignKey("plants.id", ondelete="CASCADE"), unique=True, nullable=False),
-        sa.Column("lower_limit_moist", sa.Float, nullable=False),
-        sa.Column("upper_limit_moist", sa.Float, nullable=False),
+        sa.Column("need_pump", sa.Float, nullable=False),
+        sa.Column("complete_pump", sa.Float, nullable=False),
         *timestamps(),
     )
     op.execute(
