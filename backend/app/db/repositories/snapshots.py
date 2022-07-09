@@ -28,6 +28,12 @@ class SnapshotsRepository(BaseRepository):
         snapshot_records = await self.db.fetch_all(
             query=query.GET_ALL_SNAPSHOTS_QUERY)
         return [SnapshotInDB(**item) for item in snapshot_records]
+
+    async def get_all_snapshots_by_plant_id(self, *, plant_id: int) -> List[SnapshotInDB]:
+        snapshot_records = await self.db.fetch_all(
+            query=query.GET_ALL_SNAPSHOTS_BY_PLANT_ID_QUERY,
+            values={'plant_id': plant_id})
+        return [SnapshotInDB(**item) for item in snapshot_records]
     
     async def delete_snapshot_by_id(self, *, id: int) -> int:
         snapshot = await self.get_snapshot_by_id(id=id)

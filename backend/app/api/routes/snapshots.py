@@ -25,13 +25,22 @@ async def get_snapshot_by_id(
             detail='Not found')
     return snapshot
 
-@router.get('/',
+@router.get('/all',
             response_model=List[SnapshotPublic],
             name='snapshots:get-all-snapshots')
 async def get_all_snapshots(
     snapshots_repo: SnapshotsRepository = Depends(get_repository(SnapshotsRepository))
 ) -> List[SnapshotPublic]:
     return await snapshots_repo.get_all_snapshots()
+
+@router.get('/',
+            response_model=List[SnapshotPublic],
+            name='snapshots:get-all-snapshots-by-plant-id')
+async def get_all_snapshots_by_plant_id(
+    plant_id: int,
+    snapshots_repo: SnapshotsRepository = Depends(get_repository(SnapshotsRepository))
+) -> List[SnapshotPublic]:
+    return await snapshots_repo.get_all_snapshots_by_plant_id(plant_id=plant_id)
 
 @router.delete('/{id}/', response_model=int, name='snapshots:delete-snapshot-by-id')
 async def delete_snapshot_by_id(
