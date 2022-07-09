@@ -19,6 +19,6 @@ class MoistLogInDB(IDModelMixin, DateTimeModelMixin, MoistLogBase):
     plant_id: int
     moist: float
 
-class MoistLogPublic(IDModelMixin, DateTimeModelMixin, MoistLogBase):
+class MoistLogPublic(DateTimeModelMixin, MoistLogBase):
     plant_id: int
     moist: float
