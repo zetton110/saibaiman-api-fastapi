@@ -10,12 +10,14 @@ GET_MOIST_LOG_BY_ID_QUERY = '''
 '''
 GET_ALL_MOIST_LOGS_QUERY = '''
     SELECT id, plant_id, moist, created_at, updated_at
-    FROM moist_logs;
+    FROM moist_logs
+    ORDER BY created_at desc;
 '''
 GET_ALL_MOIST_LOGS_QUERY_BY_PLANT_ID = '''
     SELECT id, plant_id, moist, created_at, updated_at
     FROM moist_logs
-    WHERE plant_id = :plant_id;
+    WHERE plant_id = :plant_id
+    ORDER BY created_at desc;
 '''
 DELETE_MOIST_LOG_BY_ID_QUERY = '''
     DELETE FROM moist_logs
