@@ -23,6 +23,15 @@ class PumpSettingsRepository(BaseRepository):
         if not pump_setting:
             return None
         return PumpSettingInDB(**pump_setting)
+    
+    async def get_pump_setting_by_plant_id(self, *, plant_id: int) -> PumpSettingInDB:
+        pump_setting = await self.db.fetch_one(
+            query=query.GET_PUMP_SETTING_LOG_BY_PLANT_ID_QUERY,
+            values={'plant_id': plant_id}
+        )
+        if not pump_setting:
+            return None
+        return PumpSettingInDB(**pump_setting)
 
     async def get_all_pump_settings(self) -> List[PumpSettingInDB]:
         pump_setting_records = await self.db.fetch_all(
