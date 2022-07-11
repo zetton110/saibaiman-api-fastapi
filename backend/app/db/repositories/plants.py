@@ -44,7 +44,7 @@ class PlantsRepository(BaseRepository):
         try:
             updated_plant = await self.db.fetch_one(
                 query=query.UPDATE_PLANT_BY_ID_QUERY,
-                values=plant_update_params.dict()
+                values=plant_update_params.dict(exclude={"created_at", "updated_at"})
             )
             return PlantInDB(**updated_plant)
         except Exception as e:
