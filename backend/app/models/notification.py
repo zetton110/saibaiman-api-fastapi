@@ -13,20 +13,21 @@ class NotificationBase(CoreModel):
     """
     plant_id: Optional[int]
     service_type: Optional[ServiceType]
-    notified_to_service: Optional[bool] = False
-    message: Optional[str] = ""
+    notified_to_service: Optional[bool]
 
 class NotificationCreate(NotificationBase):
-    plant_id: int
-    service_type: ServiceType
-    notified_to_service: bool = False
-    message: str = ""
+    message: str
 
-class NotificationUpdate(NotificationBase):
-    pass
+class NotificationUpdate(CoreModel):
+    plant_id: Optional[int]
+    service_type: Optional[ServiceType]
+    notified_to_service: Optional[bool]
 
 class NotificationInDB(IDModelMixin, DateTimeModelMixin, NotificationBase):
-    pass
+    plant_id: int
+    service_type: ServiceType
+    notified_to_service: bool
+    message: str
 
 class NotificationPublic(IDModelMixin, DateTimeModelMixin, NotificationBase):
-    pass
+    message: str

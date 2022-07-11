@@ -4,7 +4,7 @@ CREATE_NOTIFICATION_QUERY = '''
     RETURNING id, plant_id, service_type, message, notified_to_service, created_at, updated_at;
 '''
 GET_NOTIFICATION_BY_ID_QUERY = '''
-    SELECT plant_id, service_type, message, notified_to_service
+    SELECT id, plant_id, service_type, message, notified_to_service, created_at, updated_at
     FROM notifications
     WHERE id = :id;
 '''
@@ -29,4 +29,13 @@ DELETE_NOTIFICATION_BY_ID_QUERY = '''
     DELETE FROM notifications
     WHERE id = :id
     RETURNING id;
+'''
+UPDATE_NOTIFICATION_BY_ID = '''
+    UPDATE notifications
+    SET plant_id            = :plant_id,
+        service_type        = :service_type,
+        message             = :message,
+        notified_to_service = :notified_to_service
+    WHERE id = :id
+    RETURNING id, plant_id, service_type, message, notified_to_service, created_at, updated_at;
 '''
