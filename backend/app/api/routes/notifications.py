@@ -2,7 +2,7 @@ from typing import List
 
 from app.api.dependencies.database import get_repository
 from app.db.repositories.notifications import NotificationsRepository
-from app.models.notification import NotificationCreate, NotificationPublic
+from app.models.notification import NotificationCreate, NotificationPublic, ServiceType
 from fastapi import APIRouter, Body, Depends, HTTPException, Path, UploadFile, File
 from starlette.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND
 import shutil
@@ -25,6 +25,16 @@ async def get_all_notifications_by_plant_id(
     notifications_repo: NotificationsRepository = Depends(get_repository(NotificationsRepository))
 ) -> List[NotificationPublic]:
     return await notifications_repo.get_all_notifications_by_plant_id(plant_id=plant_id)
+
+@router.get('/latest-one',
+            response_model=NotificationPublic,
+            name='notifications:get-latest-notification-by-plant-id-and-service-type')
+async def get_latest_notification_by_plant_id_and_service_type(
+    plant_id: int,
+    service_type: ServiceType,
+    notifications_repo: NotificationsRepository = Depends(get_repository(NotificationsRepository))
+) -> NotificationPublic:
+    return await notifications_repo.get_latest_notification_by_plant_id_and_service_type(plant_id=plant_id, service_type= service_type)
 
 @router.post('/',
              response_model=NotificationPublic,

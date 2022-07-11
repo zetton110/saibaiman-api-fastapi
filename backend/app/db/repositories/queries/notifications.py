@@ -8,6 +8,12 @@ GET_NOTIFICATION_BY_ID_QUERY = '''
     FROM notifications
     WHERE id = :id;
 '''
+GET_LATEST_NOTIFICATION_BY_PLANT_ID_AND_SERVICE_TYPE_QUERY = '''
+    SELECT id, plant_id, service_type, message, notified_to_service, created_at, updated_at
+    FROM notifications
+    WHERE plant_id = :plant_id and service_type = :service_type
+    ORDER BY created_at desc limit 1;
+'''
 GET_ALL_NOTIFICATIONS_QUERY = '''
     SELECT id, plant_id, service_type, message, notified_to_service, created_at, updated_at
     FROM notifications

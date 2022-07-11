@@ -1,7 +1,7 @@
 from typing import List
 
 from app.db.repositories.base import BaseRepository
-from app.models.notification import NotificationCreate, NotificationInDB
+from app.models.notification import NotificationCreate, NotificationInDB, ServiceType
 from fastapi import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST
 import app.db.repositories.queries.notifications as query
@@ -19,6 +19,15 @@ class NotificationsRepository(BaseRepository):
         notification = await self.db.fetch_one(
             query=query.GET_NOTIFICATION_BY_ID_QUERY,
             values={'id': id}
+        )
+        if not notification:
+            return None
+        return NotificationInDB(**notification)
+
+    async def get_latest_notification_by_plant_id_and_service_type(self, *, plant_id: int, service_type: ServiceType) -> NotificationInDB:
+        notification = await self.db.fetch_one(
+            query=query.GET_LATEST_NOTIFICATION_BY_PLANT_ID_AND_SERVICE_TYPE_QUERY,
+            values={'plant_id': plant_id, 'service_type': service_type}
         )
         if not notification:
             return None
