@@ -36,7 +36,7 @@ async def get_latest_notification_by_plant_id_and_service_type(
 ) -> NotificationPublic:
     return await notifications_repo.get_latest_notification_by_plant_id_and_service_type(plant_id=plant_id, service_type= service_type)
 
-@router.put('/exec', response_model=NotificationPublic,
+@router.post('/executed', response_model=NotificationPublic,
             name='notifications:update_notified_to_service_by_id')
 async def update_notified_to_service_by_id(
     notification_update: NotificationUpdate = Body(..., embed=True),
