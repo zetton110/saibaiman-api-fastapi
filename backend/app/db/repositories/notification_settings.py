@@ -2,6 +2,7 @@ from typing import List
 
 from app.db.repositories.base import BaseRepository
 from app.models.notification_setting import NotificationSettingCreate, NotificationSettingInDB
+from app.models.notification_setting import ServiceType
 from fastapi import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST
 import app.db.repositories.queries.notification_settings as query
@@ -23,6 +24,16 @@ class NotificationSettingsRepository(BaseRepository):
         if not notification_setting:
             return None
         return NotificationSettingInDB(**notification_setting)
+
+    async def get_notification_setting_by_plant_id_and_service_type(self, *, plant_id: int, service_type: ServiceType) -> NotificationSettingInDB:
+        notification_setting = await self.db.fetch_one(
+            query=query.GET_NOTIFICATION_SETTING_BY_PLANT_ID_AND_SERVICE_TYPE_QUERY,
+            values={'plant_id': plant_id, 'service_type': service_type}
+        )
+        if not notification_setting:
+            return None
+        return NotificationSettingInDB(**notification_setting)
+
 
     async def get_all_notification_settings(self) -> List[NotificationSettingInDB]:
         notification_setting_records = await self.db.fetch_all(
