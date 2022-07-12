@@ -44,7 +44,7 @@ class NotificationsRepository(BaseRepository):
             updated_notification = await self.db.fetch_one(
                 query=query.UPDATE_NOTIFICATION_BY_ID,
                 values=notification_update_params.dict(
-                    exclude={"created_at", "updated_at"}
+                    exclude={"snapshot_id", "created_at", "updated_at"}
                 )
             )
             return NotificationInDB(**updated_notification)

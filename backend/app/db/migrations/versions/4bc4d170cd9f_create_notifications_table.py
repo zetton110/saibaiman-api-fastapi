@@ -59,6 +59,7 @@ def create_notifications_table() -> None:
         sa.Column("service_type", sa.String, nullable=False),
         sa.Column("message", sa.Text, nullable=False),
         sa.Column("notified_to_service", sa.Boolean, nullable=False),
+        sa.Column("snapshot_id", sa.Integer, sa.ForeignKey("snapshots.id"), nullable=True),
         *timestamps(),
     )
     op.execute(

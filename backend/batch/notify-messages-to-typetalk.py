@@ -25,8 +25,26 @@ def main():
 
                 url = setting['api_url']
                 headers = { 'X-TYPETALK-TOKEN': setting['access_token']}
-                data = {'message': notification['message']}
 
+                print(notification['snapshot_id'])
+
+                if notification['snapshot_id']:
+                    snapshot = requests.get(API_URL + 'snapshots/' + str(notification['snapshot_id'])).json()
+                    print(snapshot)
+                    path = '../uploads/' + snapshot['image_file']
+                    file = {'file': open(path, 'rb')}
+                    res_post_attachment = requests.post(url + '/attachments', files=file, headers = headers)
+                    res_post_attachment_json = res_post_attachment.json()
+
+                    fileKey = res_post_attachment_json["fileKey"]
+                    data = {
+                    'message': notification['message'],
+                    'fileKeys[0]': fileKey
+                    }
+                else:
+                    data = { 'message': notification['message'] }
+
+                
                 res_typtalk = requests.post(url, json = data, headers = headers)
                 print(res_typtalk.status_code)
 

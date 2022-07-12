@@ -14,6 +14,7 @@ class NotificationBase(CoreModel):
     plant_id: Optional[int]
     service_type: Optional[ServiceType]
     notified_to_service: Optional[bool]
+    snapshot_id: Optional[int]
 
 class NotificationCreate(NotificationBase):
     message: str
