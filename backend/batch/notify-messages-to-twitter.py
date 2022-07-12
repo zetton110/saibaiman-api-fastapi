@@ -3,8 +3,13 @@ import json
 from dotenv import load_dotenv
 import os
 import tweepy
+import datetime
 
 load_dotenv()
+
+t_delta = datetime.timedelta(hours=9)
+JST = datetime.timezone(t_delta, 'JST')
+now = datetime.datetime.now(JST)
 
 def main():
 
@@ -16,8 +21,8 @@ def main():
         for plant in plants:
             settings = requests.get(API_URL + "notification_settings/", {'plant_id': plant['id']}).json()
             for setting in settings:
-                if setting['service_type'] != 'TWITTER': break
-                if setting['enabled'] == False: break
+                if setting['service_type'] != 'TWITTER': continue
+                if setting['enabled'] == False: continue
 
                 notification = requests.get(
                     API_URL + "notifications/latest-one", 
@@ -26,8 +31,8 @@ def main():
                         'service_type': 'TWITTER'
                     }).json()
                 
-                if not notification: break
-                if notification['notified_to_service'] == True: break
+                if not notification: continue
+                if notification['notified_to_service'] == True: continue
 
                 message = notification['message']
 
@@ -53,8 +58,12 @@ def main():
                     res_weather_api = requests.get(OPEN_METEO_URL).json()
                     current_temperature = res_weather_api['current_weather']['temperature']
                     current_weather_status = res_weather_api['current_weather']['weathercode']
-                    weather_message = f'きょうの天気：{getEmojiStr(current_weather_status)}、そとの気温：{current_temperature}度'
-                    message = weather_message
+                    d_week = {'Sun': '日', 'Mon': '月', 'Tue': '火', 'Wed': '水','Thu': '木', 'Fri': '金', 'Sat': '土'}
+                    key = now.strftime('%a')
+                    w = d_week[key]
+                    time_message = now.strftime('%Y/%m/%d') + f'({w}) ' + " " + now.strftime('%H:%M')
+                    weather_message = f'天気：{getEmojiStr(current_weather_status)}、気温：{current_temperature}度'
+                    message = time_message + '\n' + weather_message
 
                     media = api.media_upload(path)
                     status = api.update_status(status=message, media_ids=[media.media_id])
