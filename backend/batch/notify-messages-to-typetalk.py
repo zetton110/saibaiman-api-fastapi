@@ -1,9 +1,14 @@
 import requests
 import json
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def main():
 
     API_URL = "http://localhost:8000/api/"
+    OPEN_METEO_URL = os.getenv('OPEN_METEO_URL')
 
     try:
         plants = requests.get(API_URL + "plants/").json()
@@ -23,6 +28,8 @@ def main():
                 if not notification: break
                 if notification['notified_to_service'] == True: break
 
+                message = notification['message']
+
                 url = setting['api_url']
                 headers = { 'X-TYPETALK-TOKEN': setting['access_token']}
 
@@ -36,15 +43,20 @@ def main():
                     res_post_attachment = requests.post(url + '/attachments', files=file, headers = headers)
                     res_post_attachment_json = res_post_attachment.json()
 
+
+                    res_weather_api = requests.get(OPEN_METEO_URL).json()
+                    current_temperature = res_weather_api['current_weather']['temperature']
+                    weather_message = f'いまの外の気温は{current_temperature}度だよ'
+                    message = message + "\n" + weather_message
+
                     fileKey = res_post_attachment_json["fileKey"]
                     data = {
-                    'message': notification['message'],
+                    'message': message,
                     'fileKeys[0]': fileKey
                     }
                 else:
-                    data = { 'message': notification['message'] }
+                    data = { 'message': message }
 
-                
                 res_typtalk = requests.post(url, json = data, headers = headers)
                 print(res_typtalk.status_code)
 
