@@ -40,6 +40,21 @@ def main():
 
                 print(notification['snapshot_id'])
 
+
+                plant_name = plant['name']
+                tag_name = f'{plant_name}の観察日記'
+                tags_json = requests.get(url + '/talks', headers = headers).json()
+                found = next((tag for tag in tags_json['talks'] if tag['name'] == tag_name), None)
+
+                if found :
+                   tag_id = found['id'] 
+                else:
+                    tag_data_param = {
+                    'talkName': tag_name
+                    }
+                    res_tag_post = requests.post(url + '/talks', json = tag_data_param, headers = headers).json()
+                    tag_id = res_tag_post['talk']['id']
+
                 if notification['snapshot_id']:
                     snapshot = requests.get(API_URL + 'snapshots/' + str(notification['snapshot_id'])).json()
                     print(snapshot)
@@ -47,7 +62,6 @@ def main():
                     file = {'file': open(path, 'rb')}
                     res_post_attachment = requests.post(url + '/attachments', files=file, headers = headers)
                     res_post_attachment_json = res_post_attachment.json()
-
 
                     res_weather_api = requests.get(OPEN_METEO_URL).json()
                     current_temperature = res_weather_api['current_weather']['temperature']
@@ -63,7 +77,8 @@ def main():
                     fileKey = res_post_attachment_json["fileKey"]
                     data = {
                     'message': message,
-                    'fileKeys[0]': fileKey
+                    'fileKeys[0]': fileKey,
+                    'talkIds[0]' : tag_id
                     }
                 else:
                     data = { 'message': message }
