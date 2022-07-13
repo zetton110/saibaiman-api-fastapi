@@ -61,9 +61,13 @@ def main():
                     d_week = {'Sun': '日', 'Mon': '月', 'Tue': '火', 'Wed': '水','Thu': '木', 'Fri': '金', 'Sat': '土'}
                     key = now.strftime('%a')
                     w = d_week[key]
+                    plant_name = plant['name']
+                    hash_tag_title = f'#{plant_name}の観察日記'
+                    hash_tag_site = '#Piと俺とエバーガーデン'
                     time_message = now.strftime('%Y/%m/%d') + f'({w}) ' + " " + now.strftime('%H:%M')
                     weather_message = f'天気：{getEmojiStr(current_weather_status)}、気温：{current_temperature}度'
-                    message = time_message + '\n' + weather_message
+                    message = time_message + '\n' + weather_message + '\n\n' + hash_tag_title + '\n' + hash_tag_site
+                    
 
                     media = api.media_upload(path)
                     status = api.update_status(status=message, media_ids=[media.media_id])
