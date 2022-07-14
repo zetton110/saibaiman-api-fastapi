@@ -143,7 +143,7 @@ def main():
                 json_data = {
                     'notification_update': {
                         'plant_id': plant['id'], 
-                        'service_type': 'TYPETALK',
+                        'service_type': service_type,
                         'notified_to_service': 'true'
                     }
                 }
@@ -169,18 +169,16 @@ def get_emoji_for_typetalk(code):
             return " :rain_cloud: "
         elif code == 56 or code == 53 or code == 66 or code == 67:
             return " :snow_cloud: "
-        elif code == 61:
+        elif code == 61 or code == 80:
             return " :closed_umbrella: "
-        elif code == 63:
+        elif code == 63 or code == 81:
             return " :umbrella: "
-        elif code == 65:
+        elif code == 65 or code == 82:
             return " :umbrella_with_rain_drops: "
         elif code == 71 or code == 73:
             return " :snow_cloud: "
         elif code == 75 or code == 77:
             return " :snowman_without_snow: "
-        elif code == 80 or code == 81 or code == 82:
-            return " :ocean: "
         elif code == 85 or code == 86:
             return " :snowflake: "
         elif code == 96 or code == 99:
@@ -203,18 +201,16 @@ def get_emoji_for_twitter(code):
             return " 🌧️ "
         elif code == 56 or code == 53 or code == 66 or code == 67:
             return " 🌨️ "
-        elif code == 61:
+        elif code == 61 or code == 80:
             return " 🌂 "
-        elif code == 63:
+        elif code == 63 or code == 81:
             return " ☂ "
-        elif code == 65:
+        elif code == 65 or code == 82:
             return " ☔ "
         elif code == 71 or code == 73:
             return " 🌨️ "
         elif code == 75 or code == 77:
             return " ⛄ "
-        elif code == 80 or code == 81 or code == 82:
-            return " 🌊 "
         elif code == 85 or code == 86:
             return " ❄ "
         elif code == 96 or code == 99:
