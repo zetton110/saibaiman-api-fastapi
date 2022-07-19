@@ -18,6 +18,7 @@ DEV_ID = int(os.getenv('DEV_ID_WEB_CAM'))
 HOST_NAME = os.getenv('API_SERVER_HOST_NAME')
 PORT = os.getenv('API_PORT')
 PLANT_ID = os.getenv('PLANT_ID')
+UPLOAD_IMG_TMP_DIR = os.getenv('UPLOAD_IMG_TMP_DIR')
 
 # パラメータ
 IMG_WIDTH = 800
@@ -45,7 +46,7 @@ def main():
 
         # 画像出力
         img_file_name = f'{datetime.now().strftime("%Y%m%d_%H%M%S")}.jpg'
-        img_file_path = "./" + img_file_name
+        img_file_path = f'{UPLOAD_IMG_TMP_DIR}/{img_file_name}'
         write_complete = cv2.imwrite(img_file_path, frame_adjusted)
         if not write_complete: raise Exception('image write failed')
 
