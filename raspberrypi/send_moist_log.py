@@ -41,7 +41,7 @@ def send_moist_log(moist_val: float):
     res = requests.post(
         f'http://{HOST_NAME}:{PORT}/api/moist_logs',
             json.dumps({
-            'new_notification':{
+            'new_moist_log':{
                 'plant_id': PLANT_ID,
                 'moist': moist_val
                 }
