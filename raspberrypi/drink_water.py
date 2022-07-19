@@ -57,7 +57,7 @@ def main():
         # 最大時間を超過し
         if time.time() > timeout:
             # スタート地点の水分量と差が少なかったら
-            if abs(start_moist - moist.voltage) < 0.1:
+            if abs(start_moist - moist.voltage) < 0.03:
                 # 水切れと判断
                 is_bottle_empty = True
                 print("water bottle is empty")
